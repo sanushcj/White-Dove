@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.whitedove">
+    package="com.sanushcj.whitedove">
    <application
         android:label="whitedove"
         android:name="${applicationName}"
