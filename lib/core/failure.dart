@@ -1,5 +1,5 @@
 class Failure{
   final String message;
-  final StackTrace stackStrace;
-  Failure(this.message, this.stackStrace); 
+  final StackTrace stacktrace;
+  Failure(this.message, this.stacktrace); 
 }
