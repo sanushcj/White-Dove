@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whitedove/apis/auth_api.dart';
-import 'package:fpdart/fpdart.dart';
+import 'package:whitedove/core/utilities.dart';
 
 final authControllerProvider =
     StateNotifierProvider<AuthController, bool>((ref) {
@@ -20,8 +20,9 @@ class AuthController extends StateNotifier<bool> {
     required BuildContext ctx,
   }) async {
     state = true;
-  final result =  _authapi.signUp(email: email, password: password);
-  // result.fold;
-  
+    final result = await _authapi.signUp(email: email, password: password);
+    result.fold((l) {
+      mySnackBar(context: ctx, content: l.message);
+    }, (r) => r.name);
   }
 }
