@@ -12,6 +12,9 @@ final authApiProvider = Provider((ref) {
 abstract class AuthenticationAPI {
   FutureEither<user.Account> signUp(
       {required String email, required String password});
+
+  FutureEither<user.Session> logIN(
+      {required String email, required String password});
 }
 
 class AuthAPI implements AuthenticationAPI {
@@ -27,6 +30,20 @@ class AuthAPI implements AuthenticationAPI {
       return right(successAccount);
     } on AppwriteException catch (e, stackTrace) {
       return left(Failure(e.message ?? 'unexpected error occured', stackTrace));
+    } catch (e, stackTrace) {
+      return left(Failure(e.toString(), stackTrace));
+    }
+  }
+
+  @override
+  FutureEither<user.Session> logIN(
+      {required String email, required String password}) async {
+    try {
+      final successAccount =
+          await _account.createEmailSession(email: email, password: password);
+      return right(successAccount);
+    } on AppwriteException catch (e, stackTrace) {
+      return left(Failure(e.message ?? '', stackTrace));
     } catch (e, stackTrace) {
       return left(Failure(e.toString(), stackTrace));
     }
